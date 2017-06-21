@@ -50,7 +50,7 @@ thodd
             {
                 return 
                 this_(static_cast<decltype(__args)&&>(__args)...) = 
-                    other(static_cast<decltype(__args)>(__args)...) ;
+                    other(static_cast<decltype(__args)&&>(__args)...) ;
             }
         } ;
 
