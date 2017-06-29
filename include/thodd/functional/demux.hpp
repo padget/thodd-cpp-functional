@@ -7,6 +7,11 @@
 namespace
 thodd
 {
+    /**
+     * Demux lambda returns a functor that apply all __funcs to the arguments passed to function __func
+     * For example:
+     * demux(f)(g1, g2, g3)(1, 2, 3) == f(g1(1, 2, 3), g2(1, 2, 3), g3(1, 2, 3))
+     */
     extern constexpr auto 
     demux = 
         [](auto&& __func)

@@ -6,6 +6,16 @@
 namespace
 thodd
 {
+    /**
+     * Cref lambda returns a functor that returns the __cref 
+     * captured by reference whatever the passed arguments. 
+     * For example:
+     * int a = 5; 
+     * auto __cref = cref(a);
+     * __cref(12, 5, 6, 7, 9) == 5 
+     * ++a;
+     * __cref(12, 5, 6, 7, 9) == 6 // the value has changed thanks to reference capturing 
+     */
     extern constexpr auto
     cref = 
         [](auto const& __cref)
@@ -14,9 +24,9 @@ thodd
             [&__cref] (auto&&... __args)
             -> decltype(auto)
             {
-                return __cref;
-            });
-        };
+                return __cref ;
+            }) ;
+        } ;
 }
 
 #endif

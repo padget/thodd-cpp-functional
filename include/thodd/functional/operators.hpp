@@ -1,7 +1,9 @@
 #ifndef __THODD_FUNCTIONAL_OPERATORS_HPP__
-#define  __THODD_FUNCTIONAL_OPERATORS_HPP__ 
+#  define  __THODD_FUNCTIONAL_OPERATORS_HPP__ 
 
 #  include <thodd/functional/functor.hpp>
+#  include <thodd/functional/ref.hpp>
+#  include <iostream>
 
 namespace
 thodd
