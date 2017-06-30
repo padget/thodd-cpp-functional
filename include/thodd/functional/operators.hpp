@@ -3,231 +3,84 @@
 
 #  include <thodd/functional/functor.hpp>
 #  include <thodd/functional/ref.hpp>
+#  include <thodd/functional/cref.hpp>
 #  include <iostream>
 
-namespace
-thodd
-{
-    template<
-        typename operator_t,
-        typename left_t,
-        typename right_t>
-    struct boperator_params
-    {
-        operator_t m_operation;
-        left_t m_left;
-        right_t m_right;
-
-        template<
-            typename ... args_t>
-        constexpr decltype(auto)
-        operator ()(
-            args_t&&... _args) const
-        {
-            return m_operation(
-                    m_left(static_cast<args_t&&>(_args)...),
-                    m_right(static_cast<args_t&&>(_args)...));
-        }
-    };
+#  define THODD_BINARY_OP_CONSTEXPR(symbol)                            \
+operator symbol (                                                      \
+    functor<auto> const & __l,                                         \
+    functor<auto> const & __r)                                         \
+{                                                                      \
+    return                                                             \
+    as_functor(                                                        \
+        [=] (auto&& ... __args)                                          \
+        {                                                              \
+            return __l(static_cast<decltype(__args)&&>(__args)...)     \
+            symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \
+        }) ;                                                           \
+}                                                                      \
 
 
-    template<
-        typename operator_t,
-        typename right_t>
-    struct uoperator_param
-    {
-
-        operator_t m_operation;
-        right_t m_right;
-
-        template<
-            typename ... args_t>
-        constexpr decltype(auto)
-        operator ()(
-            args_t&&... _args) const
-        {
-            return m_operation(m_right(static_cast<args_t&&>(_args)...));
-        }
-    };
-}
-
-
-
-
-
-
-
-#  define THODD_BINARY_OP_CONSTEXPR(name, symbol)        \
-struct name                                              \
-{                                                        \
-    template<                                            \
-        typename left_t,                                 \
-        typename right_t>                                \
-    constexpr decltype(auto)                             \
-    operator()(                                          \
-        left_t&& _left,                                  \
-        right_t&& _right) const                          \
-    {                                                    \
-        return static_cast<left_t&&>(_left)              \
-        symbol static_cast<right_t&&>(_right);           \
-    }                                                    \
-};                                                       \
-                                                         \
-                                                         \
-template<                                                \
-    typename base_t,                                     \
-    typename base2_t>                                    \
-constexpr decltype(auto)                                 \
-operator symbol(                                         \
-    functor<base_t> const& _functor,                     \
-    functor<base2_t> const& _functor2)                   \
-{                                                        \
-    return as_functor(                                   \
-            boperator_params<                            \
-                name,                                    \
-                functor<base_t>,                         \
-                functor<base2_t>>{name{},                \
-                                  _functor, _functor2}); \
-}                                                        \
-                                                         \
-template<                                                \
-    typename base_t,                                     \
-    typename base2_t>                                    \
-constexpr decltype(auto)                                 \
-operator symbol(                                         \
-    functor<base_t>&& _functor,                          \
-    functor<base2_t>&& _functor2)                        \
-{                                                        \
-    return as_functor(                                   \
-            boperator_params<                            \
-                name,                                    \
-                functor<base_t>,                         \
-                functor<base2_t>>{name{},                \
-                                  _functor, _functor2}); \
-}                                                        \
-                                                         \
-template<                                                \
-    typename base_t,                                     \
-    typename base2_t>                                    \
-constexpr decltype(auto)                                 \
-operator symbol(                                         \
-    functor<base_t> && _functor,                         \
-    functor<base2_t> const& _functor2)                   \
-{                                                        \
-    return as_functor(                                   \
-            boperator_params<                            \
-                name,                                    \
-                functor<base_t>,                         \
-                functor<base2_t>>{name{},                \
-                                  _functor, _functor2}); \
-}                                                        \
-                                                         \
-template<                                                \
-    typename base_t,                                     \
-    typename base2_t>                                    \
-constexpr decltype(auto)                                 \
-operator symbol(                                         \
-    functor<base_t> const& _functor,                     \
-    functor<base2_t> && _functor2)                       \
-{                                                        \
-    return as_functor(                                   \
-            boperator_params<                            \
-                name,                                    \
-                functor<base_t>,                         \
-                functor<base2_t>>{name{},                \
-                                  _functor, _functor2}); \
-}                                                        \
-
-
-
-
-
-
-#  define THODD_UNARY_OP_CONSTEXPR(name, symbol)     \
-struct name                                          \
-{                                                    \
-    template<                                        \
-        typename right_t>                            \
-    constexpr decltype(auto)                         \
-    operator()(right_t&& _right) const               \
-    {                                                \
-        return symbol static_cast<right_t&&>(_right);\
-    }                                                \
-};                                                   \
-                                                     \
-template<                                            \
-    typename base_t>                                 \
-constexpr decltype(auto)                             \
-operator symbol(                                     \
-    functor<base_t> const& _functor)                 \
-{                                                    \
-    return as_functor(                               \
-            uoperator_param<                         \
-                name,                                \
-                functor<base_t>>{name{},             \
-                         _functor});                 \
-}                                                    \
-                                                     \
-template<                                            \
-    typename base_t>                                 \
-constexpr decltype(auto)                             \
-operator symbol(                                     \
-    functor<base_t> && _functor)                     \
-{                                                    \
-    return as_functor(                               \
-            uoperator_param<                         \
-                name,                                \
-                functor<base_t>>{name{},             \
-                         _functor});                 \
-}                                                    \
+#  define THODD_UNARY_OP_CONSTEXPR(symbol)                             \
+operator symbol (                                                      \
+    functor<auto> const & __r)                                         \
+{                                                                      \
+    return                                                             \
+    as_functor(                                                        \
+        [=] (auto&& ... __args)                                          \
+        {                                                              \
+            return                                                     \
+            symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \
+        }) ;                                                           \
+}                                                                      \
 
 
 namespace thodd
 {
     /// Arithmetics
-    THODD_UNARY_OP_CONSTEXPR(inc, ++)
-    THODD_UNARY_OP_CONSTEXPR(dec, --)
-    THODD_UNARY_OP_CONSTEXPR(negate, -)
-    THODD_UNARY_OP_CONSTEXPR(positive, +)
+    THODD_UNARY_OP_CONSTEXPR(++)
+    THODD_UNARY_OP_CONSTEXPR(--)
+    THODD_UNARY_OP_CONSTEXPR(-)
+    THODD_UNARY_OP_CONSTEXPR(+)
 
-    THODD_BINARY_OP_CONSTEXPR(plus, +)
-    THODD_BINARY_OP_CONSTEXPR(minus, -)
-    THODD_BINARY_OP_CONSTEXPR(multiplies, *)
-    THODD_BINARY_OP_CONSTEXPR(divides, /)
-    THODD_BINARY_OP_CONSTEXPR(modulo, %)
+    THODD_BINARY_OP_CONSTEXPR(+)
+    THODD_BINARY_OP_CONSTEXPR(-)
+    THODD_BINARY_OP_CONSTEXPR(*)
+    THODD_BINARY_OP_CONSTEXPR(/)
+    THODD_BINARY_OP_CONSTEXPR(%)
 
     /// Logics
-    THODD_BINARY_OP_CONSTEXPR(equal, ==)
-    THODD_BINARY_OP_CONSTEXPR(not_equal, !=)
-    THODD_BINARY_OP_CONSTEXPR(greater, >)
-    THODD_BINARY_OP_CONSTEXPR(less, <)
-    THODD_BINARY_OP_CONSTEXPR(greater_equal, >=)
-    THODD_BINARY_OP_CONSTEXPR(less_equal, <=)
-    THODD_BINARY_OP_CONSTEXPR(bit_and, &)
-    THODD_BINARY_OP_CONSTEXPR(bit_or, |)
-    THODD_BINARY_OP_CONSTEXPR(bit_xor, ^)
-    THODD_BINARY_OP_CONSTEXPR(and_, &&)
-    THODD_BINARY_OP_CONSTEXPR(or_, ||)
+    THODD_BINARY_OP_CONSTEXPR(==)
+    THODD_BINARY_OP_CONSTEXPR(!=)
+    THODD_BINARY_OP_CONSTEXPR(>)
+    THODD_BINARY_OP_CONSTEXPR(<)
+    THODD_BINARY_OP_CONSTEXPR(>=)
+    THODD_BINARY_OP_CONSTEXPR(<=)
+    THODD_BINARY_OP_CONSTEXPR(&)
+    THODD_BINARY_OP_CONSTEXPR(|)
+    THODD_BINARY_OP_CONSTEXPR(^)
+    THODD_BINARY_OP_CONSTEXPR(&&)
+    THODD_BINARY_OP_CONSTEXPR(||)
 
-    THODD_UNARY_OP_CONSTEXPR(not_, !)
-    THODD_UNARY_OP_CONSTEXPR(bit_not, ~)
+    THODD_UNARY_OP_CONSTEXPR(!)
+    THODD_UNARY_OP_CONSTEXPR(~)
 
     /// Affectations
-    THODD_BINARY_OP_CONSTEXPR(plus_affect, +=)
-    THODD_BINARY_OP_CONSTEXPR(minus_affect, -=)
-    THODD_BINARY_OP_CONSTEXPR(multiplies_affect, *=)
-    THODD_BINARY_OP_CONSTEXPR(divides_affect, /=)
-    THODD_BINARY_OP_CONSTEXPR(modulo_affect, %=)
-    THODD_BINARY_OP_CONSTEXPR(lshift_affect, <<=)
-    THODD_BINARY_OP_CONSTEXPR(rshift_affect, >>=)
+    THODD_BINARY_OP_CONSTEXPR(+=)
+    THODD_BINARY_OP_CONSTEXPR(-=)
+    THODD_BINARY_OP_CONSTEXPR(*=)
+    THODD_BINARY_OP_CONSTEXPR(/=)
+    THODD_BINARY_OP_CONSTEXPR(%=)
+    THODD_BINARY_OP_CONSTEXPR(<<=)
+    THODD_BINARY_OP_CONSTEXPR(>>=)
 
     /// Flux
-    THODD_BINARY_OP_CONSTEXPR(lshift, <<)
-    THODD_BINARY_OP_CONSTEXPR(rshift, >>)
+    THODD_BINARY_OP_CONSTEXPR(<<)
+    THODD_BINARY_OP_CONSTEXPR(>>)
 
     /// Access
-    THODD_UNARY_OP_CONSTEXPR(addressof, &)
-    THODD_UNARY_OP_CONSTEXPR(valueof, *)
+    THODD_UNARY_OP_CONSTEXPR(&)
+    THODD_UNARY_OP_CONSTEXPR(*)
 
 
     extern constexpr auto cout_  = ref(std::cout);
@@ -239,7 +92,6 @@ namespace thodd
 	extern constexpr auto cerr_  = ref(std::cerr);
     extern constexpr auto wcerr_ = ref(std::wcerr);
 
-
     namespace detail
     {
         using cout_char = typename decltype(std::cout)::char_type;
@@ -248,21 +100,29 @@ namespace thodd
         using wcout_char = typename decltype(std::wcout)::char_type;
         using wcout_traits = typename decltype(std::wcout)::traits_type;
     }
+}
 
 #  define ARGON_COMPLEX_STREAMFLAG(name)                                                           \
     extern constexpr auto name##_  = cref(std::name<detail::cout_char, detail::cout_traits>);      \
     extern constexpr auto w##name##_ = cref(std::name<detail::wcout_char, detail::wcout_traits>);  \
 
+namespace
+thodd 
+{
 
     ARGON_COMPLEX_STREAMFLAG(endl)
     ARGON_COMPLEX_STREAMFLAG(flush)
     ARGON_COMPLEX_STREAMFLAG(ends)
+}
 
 
 #  define ARGON_SIMPLE_STREAMFLAG(name)                  \
 	extern constexpr auto name##_ = cref(std::name);     \
 
 
+namespace
+thodd
+{
     ARGON_SIMPLE_STREAMFLAG(boolalpha)
     ARGON_SIMPLE_STREAMFLAG(showbase)
     ARGON_SIMPLE_STREAMFLAG(noshowbase)

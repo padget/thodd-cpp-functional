@@ -6,6 +6,14 @@
 namespace
 thodd
 {
+    /**
+     * Val lambda returns a functor that returns the __ref 
+     * captured by reference whatever the passed arguments. 
+     * For example:
+     * int a = 5; 
+     * auto __v = val(a) ;
+     * __v() == 5
+     */
     extern constexpr auto
     val = 
         [](auto&& __val)
@@ -14,9 +22,9 @@ thodd
             [__val](auto&&... __args)
             -> decltype(auto)
             {
-                return __val;
-            });
-        };
+                return __val ;
+            }) ;
+        } ;
 }
 
 #endif

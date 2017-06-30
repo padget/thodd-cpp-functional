@@ -6,9 +6,13 @@
 namespace
 thodd
 {
+    /**
+     * On lambda returns a functor that applies __applied to each own passed arguments.
+     * For example :
+     * on(f, a, args...) <=> f(a(args)...)
+     */
     extern constexpr auto 
-    on = 
-        [](auto&& __func, auto&& __applied)
+    on = compose __func, auto&& __applied)
         {
             return as_functor( 
             [__func, __applied](auto&&... __args)

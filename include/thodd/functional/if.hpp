@@ -7,6 +7,12 @@
 namespace
 thodd
 {
+    /**
+     * If_ lambda returns a functor that can take one condition functor and returns a statement functor.
+     * For example :
+     * if_( [] (...) { return true ; } )
+     * [ [] (...) { cout << "hello" ; } ] ;
+     */
     extern constexpr auto
     if_ = 
         [](auto&& __cond)

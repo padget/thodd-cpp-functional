@@ -35,40 +35,11 @@ thodd
         functor<base_t> const& _functor,
         functor<base2_t> const& _functor2)
     {
-        return as_functor(statements<base_t, base2_t>{_functor.base, _functor2.base});
-    }
-
-    template<
-        typename base_t,
-        typename base2_t>
-    constexpr auto
-    operator , (
-        functor<base_t> const& _functor,
-        functor<base2_t> && _functor2)
-    {
-        return as_functor(statements<base_t, base2_t>{_functor.base, _functor2.base});
-    }
-
-    template<
-        typename base_t,
-        typename base2_t>
-    constexpr auto
-    operator , (
-        functor<base_t> && _functor,
-        functor<base2_t> const& _functor2)
-    {
-        return as_functor(statements<base_t, base2_t>{_functor.base, _functor2.base});
-    }
-
-    template<
-        typename base_t,
-        typename base2_t>
-    constexpr auto
-    operator , (
-        functor<base_t> && _functor,
-        functor<base2_t> && _functor2)
-    {
-        return as_functor(statements<base_t, base2_t>{_functor.base, _functor2.base});
+        return 
+        as_functor(
+            statements<base_t, base2_t>
+            { _functor.base, 
+              _functor2.base }) ;
     }
 }
 

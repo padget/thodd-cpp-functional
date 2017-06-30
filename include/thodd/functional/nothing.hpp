@@ -6,6 +6,9 @@
 namespace
 thodd
 {
+    /**
+     * Nothing lambda returns a functor that returns nothing :D whatever the passed arguments.
+     */
     extern constexpr auto 
     nothing = as_functor([](auto&&... __args) {}) ;
 }

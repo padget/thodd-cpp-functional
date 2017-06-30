@@ -6,6 +6,18 @@
 namespace
 thodd
 {
+    /**
+     * Fix lambda returns a functor that implements the fix point pattern.
+     * For example : 
+     * fix(f)(1,2,3) == f(f, 1, 2, 3)
+     * f (auto&& func, auto first, auto ... next) 
+     * {
+     *      if (sizeof...(next))
+     *          return 0 ;
+     *      else 
+     *          return 1 + func(next...) ;  
+     * }
+     */
     extern constexpr auto
     fix = 
         [](auto&& __func)
