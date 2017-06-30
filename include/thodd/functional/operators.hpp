@@ -7,13 +7,14 @@
 #  include <iostream>
 
 #  define THODD_BINARY_OP_CONSTEXPR(symbol)                            \
+constexpr auto                                                         \
 operator symbol (                                                      \
     functor<auto> const & __l,                                         \
     functor<auto> const & __r)                                         \
 {                                                                      \
     return                                                             \
     as_functor(                                                        \
-        [=] (auto&& ... __args)                                          \
+        [=] (auto&& ... __args)                                        \
         {                                                              \
             return __l(static_cast<decltype(__args)&&>(__args)...)     \
             symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \
@@ -22,12 +23,13 @@ operator symbol (                                                      \
 
 
 #  define THODD_UNARY_OP_CONSTEXPR(symbol)                             \
+constexpr auto                                                         \
 operator symbol (                                                      \
     functor<auto> const & __r)                                         \
 {                                                                      \
     return                                                             \
     as_functor(                                                        \
-        [=] (auto&& ... __args)                                          \
+        [=] (auto&& ... __args)                                        \
         {                                                              \
             return                                                     \
             symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \
