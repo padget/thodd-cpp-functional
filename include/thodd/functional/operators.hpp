@@ -14,7 +14,8 @@ operator symbol (                                                      \
 {                                                                      \
     return                                                             \
     as_functor(                                                        \
-        [=] (auto&& ... __args)                                        \
+        [&] (auto&& ... __args)                                        \
+        -> decltype(auto)                                              \
         {                                                              \
             return __l(static_cast<decltype(__args)&&>(__args)...)     \
             symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \

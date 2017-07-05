@@ -17,7 +17,7 @@ thodd
         {
             return 
             as_functor(
-                [__arg] (auto&&... __args)
+                [&] (auto && ... __args)
                 -> decltype(auto)
                 {
                     return __arg ;

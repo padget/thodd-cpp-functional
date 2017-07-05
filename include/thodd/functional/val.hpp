@@ -16,14 +16,15 @@ thodd
      */
     extern constexpr auto
     val = 
-        [](auto&& __val)
+        [] (auto&& __val)
         {
-            return as_functor(
-            [__val](auto&&... __args)
-            -> decltype(auto)
-            {
-                return __val ;
-            }) ;
+            return 
+            as_functor(
+                [__val] (auto && ... __args)
+                -> decltype(auto)
+                {
+                    return __val ;
+                }) ;
         } ;
 }
 

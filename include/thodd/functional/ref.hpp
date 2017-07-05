@@ -20,14 +20,16 @@ thodd
      */
     extern constexpr auto
     ref = 
-        [](auto& __ref)
+        [] (auto& __ref)
         {
-            return as_functor(
-            [&__ref](auto&&... __args)
-            -> decltype(auto)
-            {
-                return __ref;
-            });
+            return 
+            as_functor(
+                [&__ref] (auto && ... __args)
+                -> decltype(auto)
+                {
+                    return 
+                    __ref ;
+                });
         };
 }
 

@@ -16,7 +16,7 @@ thodd
         auto&& __base)
     {
         return 
-        functor<decltype(__base)>
+        functor<std::decay_t<decltype(__base)>>
         { static_cast<decltype(__base)&&>(__base) } ;
     }
 
@@ -25,14 +25,16 @@ thodd
         typename base_t>
     struct functor
     {
-        std::decay_t<base_t> base;
+        std::decay_t<base_t> base ;
 
-        constexpr decltype(auto)
+        constexpr auto
         operator () (
             auto&&... __args) const
+        -> decltype(auto)
         {
             return 
-            base(static_cast<decltype(__args)&&>(__args)...) ;
+            base(
+                static_cast<decltype(__args)&&>(__args)...) ;
         }
 
 

@@ -3,6 +3,10 @@
 #  define THODD_FUNCTIONAL_HPP_
 
 /// TODO Doc all this
+
+#  include <thodd/functional/functor.hpp>
+#  include <thodd/functional/statements.hpp>
+
 #  include <thodd/functional/always.hpp>
 #  include <thodd/functional/bind.hpp>
 #  include <thodd/functional/cast.hpp>
@@ -11,8 +15,6 @@
 #  include <thodd/functional/delete.hpp>
 #  include <thodd/functional/demux.hpp>
 #  include <thodd/functional/fix.hpp>
-#  include <thodd/functional/functor.hpp>
-#  include <thodd/functional/statements.hpp>
 #  include <thodd/functional/member.hpp>
 #  include <thodd/functional/new.hpp>
 #  include <thodd/functional/nothing.hpp>

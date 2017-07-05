@@ -18,14 +18,15 @@ thodd
      */
     extern constexpr auto
     cref = 
-        [](auto const& __cref)
+        [] (auto const& __cref)
         {
-            return as_functor(
-            [&__cref] (auto&&... __args)
-            -> decltype(auto)
-            {
-                return __cref ;
-            }) ;
+            return 
+            as_functor(
+                [&__cref] (auto && ... __args)
+                -> decltype(auto)
+                {
+                    return __cref ;
+                }) ;
         } ;
 }
 
