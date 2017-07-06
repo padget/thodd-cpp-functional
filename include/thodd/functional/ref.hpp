@@ -24,7 +24,7 @@ thodd
         {
             return 
             as_functor(
-                [&__ref] (auto && ... __args)
+                [&__ref] (...)
                 -> decltype(auto)
                 {
                     return 

@@ -20,8 +20,7 @@ thodd
         {
             return 
             as_functor(
-                [__val] (auto && ... __args)
-                -> decltype(auto)
+                [=] (...)
                 {
                     return __val ;
                 }) ;

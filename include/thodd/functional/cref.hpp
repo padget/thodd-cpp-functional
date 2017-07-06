@@ -22,7 +22,7 @@ thodd
         {
             return 
             as_functor(
-                [&__cref] (auto && ... __args)
+                [&__cref] (...)
                 -> decltype(auto)
                 {
                     return __cref ;
