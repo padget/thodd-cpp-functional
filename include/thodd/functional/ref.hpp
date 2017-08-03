@@ -28,7 +28,7 @@ thodd
                 -> decltype(auto)
                 {
                     return 
-                    __ref ;
+                    (__ref) ;
                 });
         };
 }
