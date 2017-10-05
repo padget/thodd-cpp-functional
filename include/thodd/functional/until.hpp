@@ -9,20 +9,20 @@ thodd
 {
     inline constexpr auto
     until_ = 
-        [] (auto&& __cond)
+        [] (auto && __cond)
         {
             return 
             as_statement (
-            [&__cond] (auto&& __statements)
+            [__cond] (auto && __statements)
             {
-                return as_functor (
+                return 
                 [__cond, __statements] (auto&&... __args)
                 {
-                    while(!__cond (static_cast<decltype(__args)&&>(__args)...))
+                    while (!__cond (static_cast<decltype(__args)&&>(__args)...))
                         __statements (static_cast<decltype(__args)&&>(__args)...);
-                });
-            });
-        };
+                } ;
+            }) ;
+        } ;
 }
 
 #endif

@@ -6,84 +6,85 @@
 #  include <thodd/functional/cref.hpp>
 #  include <iostream>
 
-#  define THODD_BINARY_OP_CONSTEXPR(symbol)                            \
-constexpr auto                                                         \
-operator symbol (                                                      \
-    functor<auto> const & __l,                                         \
-    functor<auto> const & __r)                                         \
-{                                                                      \
-    return                                                             \
-    as_functor(                                                        \
-        [&] (auto&& ... __args)                                        \
-        -> decltype(auto)                                              \
-        {                                                              \
-            return __l(static_cast<decltype(__args)&&>(__args)...)     \
-            symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \
-        }) ;                                                           \
-}                                                                      \
+#  define THODD_BINARY_OP_CONSTEXPR(symbol, name)               \
+inline constexpr auto                                           \
+name =                                                          \
+[] (auto && left, auto && ... right)                            \
+{                                                               \
+    return                                                      \
+    [left, right...] (auto && ... args)                         \
+    {                                                           \
+        return                                                  \
+        left (std::forward<decltype(args)>(args)...)            \
+        symbol (                                                \
+            right (std::forward<decltype(args)>(args)...)       \
+            symbol ... ) ;                                      \
+    } ;                                                         \
+} ;                                                             \
 
 
-#  define THODD_UNARY_OP_CONSTEXPR(symbol)                             \
-constexpr auto                                                         \
-operator symbol (                                                      \
-    functor<auto> const & __r)                                         \
-{                                                                      \
-    return                                                             \
-    as_functor(                                                        \
-        [=] (auto&& ... __args)                                        \
-        {                                                              \
-            return                                                     \
-            symbol __r(static_cast<decltype(__args)&&>(__args)...) ;   \
-        }) ;                                                           \
-}                                                                      \
+
+#  define THODD_UNARY_OP_CONSTEXPR(symbol, name)                \
+inline constexpr auto                                           \
+name =                                                          \
+[] (auto && left)                            \
+{                                                               \
+    return                                                      \
+    [left] (auto && ... args)                         \
+    {                                                           \
+        return                                                  \
+        symbol left (std::forward<decltype(args)>(args)...) ;            \
+    } ;                                                         \
+} ;                                                             \
+
 
 
 namespace thodd
 {
     /// Arithmetics
-    THODD_UNARY_OP_CONSTEXPR(++)
-    THODD_UNARY_OP_CONSTEXPR(--)
-    THODD_UNARY_OP_CONSTEXPR(-)
-    THODD_UNARY_OP_CONSTEXPR(+)
+    THODD_UNARY_OP_CONSTEXPR(++, inc)
+    THODD_UNARY_OP_CONSTEXPR(--, dec)
+    THODD_UNARY_OP_CONSTEXPR(-, neg)
+    THODD_UNARY_OP_CONSTEXPR(+, pos)
 
-    THODD_BINARY_OP_CONSTEXPR(+)
-    THODD_BINARY_OP_CONSTEXPR(-)
-    THODD_BINARY_OP_CONSTEXPR(*)
-    THODD_BINARY_OP_CONSTEXPR(/)
-    THODD_BINARY_OP_CONSTEXPR(%)
+    THODD_BINARY_OP_CONSTEXPR(+, sum)
+    THODD_BINARY_OP_CONSTEXPR(-, sub)
+    THODD_BINARY_OP_CONSTEXPR(*, mult)
+    THODD_BINARY_OP_CONSTEXPR(/, div)
+    THODD_BINARY_OP_CONSTEXPR(%, mod)
 
     /// Logics
-    THODD_BINARY_OP_CONSTEXPR(==)
-    THODD_BINARY_OP_CONSTEXPR(!=)
-    THODD_BINARY_OP_CONSTEXPR(>)
-    THODD_BINARY_OP_CONSTEXPR(<)
-    THODD_BINARY_OP_CONSTEXPR(>=)
-    THODD_BINARY_OP_CONSTEXPR(<=)
-    THODD_BINARY_OP_CONSTEXPR(&)
-    THODD_BINARY_OP_CONSTEXPR(|)
-    THODD_BINARY_OP_CONSTEXPR(^)
-    THODD_BINARY_OP_CONSTEXPR(&&)
-    THODD_BINARY_OP_CONSTEXPR(||)
+    THODD_BINARY_OP_CONSTEXPR(==, equal)
+    THODD_BINARY_OP_CONSTEXPR(!=, not_equal)
+    THODD_BINARY_OP_CONSTEXPR(>, greater)
+    THODD_BINARY_OP_CONSTEXPR(<, lower)
+    THODD_BINARY_OP_CONSTEXPR(>=, greater_equal)
+    THODD_BINARY_OP_CONSTEXPR(<=, lower_equal)
+    THODD_BINARY_OP_CONSTEXPR(&, bit_and)
+    THODD_BINARY_OP_CONSTEXPR(|, bit_or)
+    THODD_BINARY_OP_CONSTEXPR(^, bit_xor)
+    THODD_BINARY_OP_CONSTEXPR(&&, and_)
+    THODD_BINARY_OP_CONSTEXPR(||, or_)
 
-    THODD_UNARY_OP_CONSTEXPR(!)
-    THODD_UNARY_OP_CONSTEXPR(~)
+    THODD_UNARY_OP_CONSTEXPR(!, not_)
+    THODD_UNARY_OP_CONSTEXPR(~, compl_)
 
     /// Affectations
-    THODD_BINARY_OP_CONSTEXPR(+=)
-    THODD_BINARY_OP_CONSTEXPR(-=)
-    THODD_BINARY_OP_CONSTEXPR(*=)
-    THODD_BINARY_OP_CONSTEXPR(/=)
-    THODD_BINARY_OP_CONSTEXPR(%=)
-    THODD_BINARY_OP_CONSTEXPR(<<=)
-    THODD_BINARY_OP_CONSTEXPR(>>=)
+    THODD_BINARY_OP_CONSTEXPR(+=, sum_ass)
+    THODD_BINARY_OP_CONSTEXPR(-=, sub_ass)
+    THODD_BINARY_OP_CONSTEXPR(*=, mult_ass)
+    THODD_BINARY_OP_CONSTEXPR(/=, div_ass)
+    THODD_BINARY_OP_CONSTEXPR(%=, mod_ass)
+    THODD_BINARY_OP_CONSTEXPR(<<=, lshift_ass)
+    THODD_BINARY_OP_CONSTEXPR(>>=, rshift_ass)
 
     /// Flux
-    THODD_BINARY_OP_CONSTEXPR(<<)
-    THODD_BINARY_OP_CONSTEXPR(>>)
+    THODD_BINARY_OP_CONSTEXPR(<<, lshift)
+    THODD_BINARY_OP_CONSTEXPR(>>, rshift)
 
     /// Access
-    THODD_UNARY_OP_CONSTEXPR(&)
-    THODD_UNARY_OP_CONSTEXPR(*)
+    THODD_UNARY_OP_CONSTEXPR(&, addr)
+    THODD_UNARY_OP_CONSTEXPR(*, indir)
 
 
     inline constexpr auto cout_  = ref(std::cout);
@@ -112,7 +113,6 @@ namespace thodd
 namespace
 thodd 
 {
-
     ARGON_COMPLEX_STREAMFLAG(endl)
     ARGON_COMPLEX_STREAMFLAG(flush)
     ARGON_COMPLEX_STREAMFLAG(ends)
@@ -148,7 +148,6 @@ thodd
     ARGON_SIMPLE_STREAMFLAG(scientific)
     ARGON_SIMPLE_STREAMFLAG(hexfloat)
     ARGON_SIMPLE_STREAMFLAG(defaultfloat)
-
 }
 
 #endif

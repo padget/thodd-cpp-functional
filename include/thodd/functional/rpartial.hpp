@@ -8,17 +8,17 @@ thodd
 {
     inline constexpr auto
     rpartial = 
-        [] (auto&& __func, auto&&... __params)
+    [] (auto&& __func, auto && ... __params)
+    {
+        return 
+        [__func, &__params...] (auto && ... __args)
+        -> decltype(auto)
         {
-            return as_functor (
-            [__func, &__params...] (auto&&... __args)
-            -> decltype(auto)
-            {
-                return 
-                __func (static_cast<decltype(__args)&&>(__args)..., 
-                       static_cast<decltype(__params)&&>(__params)...) ;
-            }) ;
+            return 
+            __func (static_cast<decltype(__args)&&>(__args)..., 
+                    static_cast<decltype(__params)&&>(__params)...) ;
         } ;
+    } ;
 }
 
 #endif

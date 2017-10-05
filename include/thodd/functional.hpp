@@ -2,8 +2,6 @@
 #ifndef THODD_FUNCTIONAL_HPP_
 #  define THODD_FUNCTIONAL_HPP_
 
-/// TODO Doc all this
-
 #  include <thodd/functional/functor.hpp>
 #  include <thodd/functional/statements.hpp>
 
@@ -27,6 +25,7 @@
 #  include <thodd/functional/statement.hpp>
 #  include <thodd/functional/statements.hpp>
 #  include <thodd/functional/tern.hpp>
+#  include <thodd/functional/tuple.hpp>
 #  include <thodd/functional/until.hpp>
 #  include <thodd/functional/val.hpp>
 #  include <thodd/functional/while.hpp>

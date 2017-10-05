@@ -13,16 +13,15 @@ thodd
      */ 
     inline constexpr auto 
     always = 
-        [] (auto && __arg)
+    [] (auto && __arg)
+    {
+        return 
+        [&] (auto && ... __args)
+        -> decltype(auto)
         {
-            return 
-            as_functor (
-                [&] (auto && ... __args)
-                -> decltype(auto)
-                {
-                    return __arg ;
-                }) ;
+            return __arg ;
         } ;
+    } ;
 }
 
 #endif

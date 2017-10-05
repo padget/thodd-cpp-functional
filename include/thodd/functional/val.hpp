@@ -16,15 +16,11 @@ thodd
      */
     inline constexpr auto
     val = 
-        [] (auto&& __val)
-        {
-            return 
-            as_functor (
-                [=] (...)
-                {
-                    return __val ;
-                }) ;
-        } ;
+    [] (auto&& __val)
+    {
+        return 
+        [=] (...) { return __val ; } ;
+    } ;
 }
 
 #endif

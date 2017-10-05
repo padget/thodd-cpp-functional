@@ -8,12 +8,11 @@ thodd
 {
     inline constexpr auto
     delete_ = 
-        as_functor (
-            [] (auto* __ptr)
-            {
-                delete __ptr;
-                __ptr = nullptr;
-            });
+    [] (auto* __ptr)
+    {
+        delete __ptr;
+        __ptr = nullptr;
+    } ;
 }
 
 #endif

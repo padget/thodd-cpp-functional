@@ -15,20 +15,20 @@ thodd
      */
     inline constexpr auto
 	member = 
-        [] (auto && __func, auto && __instance, auto &&... _prebinded)
+    [] (auto && __func, auto && __instance, auto &&... _prebinded)
+    {
+        return
+        [=] (auto &&... _args) 
+        -> decltype(auto)
         {
-            return as_functor(
-            [=] (auto &&... _args) 
-            -> decltype(auto)
-            {
-                using func_t = decltype(__func) ;
-                using instance_t = decltype(__instance) ;
+            using func_t = decltype(__func) ;
+            using instance_t = decltype(__instance) ;
 
-                return 
-                (static_cast<instance_t&&>(__instance).*static_cast<func_t&&>(__func))
-                (_prebinded (static_cast<decltype(_args)&&>(_args)...)...) ;
-            }) ;
+            return 
+            (static_cast<instance_t&&>(__instance).*static_cast<func_t&&>(__func))
+            (_prebinded (static_cast<decltype(_args)&&>(_args)...)...) ;
         } ;
+    } ;
 }
 
 #endif

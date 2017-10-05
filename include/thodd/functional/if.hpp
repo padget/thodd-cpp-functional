@@ -15,20 +15,20 @@ thodd
      */
     inline constexpr auto
     if_ = 
-        [] (auto&& __cond)
+    [] (auto&& __cond)
+    {
+        return 
+        as_statement (
+        [__cond] (auto&& __statements)
         {
-            return 
-            as_statement (
-            [__cond] (auto&& __statements)
+            return
+            [__cond, __statements] (auto && ... __args)
             {
-                return as_functor(
-                [__cond, __statements](auto && ... __args)
-                {
-                    if (__cond (static_cast<decltype(__args)&&>(__args)...))
-                        __statements (static_cast<decltype(__args)&&>(__args)...);
-                });
-            });
-        };
+                if (__cond (static_cast<decltype(__args)&&>(__args)...))
+                    __statements (static_cast<decltype(__args)&&>(__args)...);
+            } ;
+        }) ;
+    } ;
 }
 
 #endif

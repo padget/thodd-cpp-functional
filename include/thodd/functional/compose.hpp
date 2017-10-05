@@ -17,9 +17,8 @@ thodd
         [] (auto && __fsup, auto && __finf) 
         {
             return 
-            as_functor (
-                demux (static_cast<decltype(__fsup)&&>(__fsup))
-                (static_cast<decltype(__finf)&&>(__finf))) ;
+            demux (static_cast<decltype(__fsup)&&>(__fsup))
+            (static_cast<decltype(__finf)&&>(__finf)) ;
         } ;
 }
 

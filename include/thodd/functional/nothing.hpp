@@ -10,7 +10,7 @@ thodd
      * Nothing lambda returns a functor that returns nothing :D whatever the passed arguments.
      */
     inline constexpr auto 
-    nothing = as_functor ([] (auto&&... __args) {}) ;
+    nothing = [] (auto && ... __args) {} ;
 }
 
 #endif

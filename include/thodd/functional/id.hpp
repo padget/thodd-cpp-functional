@@ -7,7 +7,7 @@ thodd
     struct id
     {
         constexpr auto 
-        operator()( 
+        operator () ( 
             auto&&... __args) const
         -> decltype(auto) 
         {

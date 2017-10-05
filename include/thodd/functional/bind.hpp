@@ -15,12 +15,12 @@ thodd
      */ 
     inline constexpr auto
     bind = 
-        [] (auto && __func, auto &&... __args) 
-        {
-            return as_functor(
-                demux(static_cast<decltype(__func)&&>(__func))
-                (static_cast<decltype(__args)&&>(__args)...)) ;  
-        } ;    
+    [] (auto && __func, auto &&... __args) 
+    {
+        return
+        demux(static_cast<decltype(__func)&&>(__func))
+        (static_cast<decltype(__args)&&>(__args)...) ;  
+    } ;    
 }
 
 #endif

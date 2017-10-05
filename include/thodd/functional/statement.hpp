@@ -14,7 +14,7 @@ thodd
          builder_t builder;
 
         constexpr auto
-        operator[] (
+        operator [] (
             auto&& __statements) const
         {
             return 

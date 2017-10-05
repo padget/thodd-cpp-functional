@@ -18,16 +18,15 @@ thodd
      */
     inline constexpr auto
     cref = 
-        [] (auto const & __cref)
+    [] (auto const & __cref)
+    {
+        return 
+        [&__cref] (...) constexpr
+        -> decltype(auto)
         {
-            return 
-            as_functor (
-                [&__cref] (...) constexpr
-                -> decltype(auto)
-                {
-                    return __cref ;
-                }) ;
+            return __cref ;
         } ;
+    } ;
 }
 
 #endif

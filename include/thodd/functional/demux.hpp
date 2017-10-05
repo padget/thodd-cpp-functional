@@ -14,20 +14,20 @@ thodd
      */
     inline constexpr auto 
     demux = 
-        [] (auto && __func)
+    [] (auto && __func)
+    {
+        return 
+        [&__func] (auto && ... __funcs)
         {
-            return 
-            [&__func] (auto && ... __funcs)
+            return
+            [__func, __funcs...] (auto && ... __args)
+            -> decltype(auto)
             {
                 return 
-                as_functor ( 
-                    [__func, __funcs...](auto && ... __args)
-                    -> decltype(auto)
-                    {
-                        return __func(__funcs(static_cast<decltype(__args)&&>(__args)...)...) ;
-                    }) ;
+                __func(__funcs(static_cast<decltype(__args)&&>(__args)...)...) ;
             } ;
         } ;
+    } ;
 }
 
 #endif

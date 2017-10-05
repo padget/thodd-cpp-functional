@@ -20,17 +20,16 @@ thodd
      */
     inline constexpr auto
     ref = 
-        [] (auto& __ref)
+    [] (auto& __ref)
+    {
+        return 
+        [&__ref] (...)
+        -> decltype(auto)
         {
             return 
-            as_functor (
-                [&__ref] (...)
-                -> decltype(auto)
-                {
-                    return 
-                    (__ref) ;
-                });
-        };
+            (__ref) ;
+        } ;
+    } ;
 }
 
 #endif

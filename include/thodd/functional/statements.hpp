@@ -36,10 +36,8 @@ thodd
         functor<base2_t> const& _functor2)
     {
         return 
-        as_functor(
-            statements<base_t, base2_t>
-            { _functor.base, 
-              _functor2.base }) ;
+        statements<base_t, base2_t>
+        { _functor.base, _functor2.base } ;
     }
 }
 

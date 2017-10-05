@@ -17,14 +17,14 @@ thodd
         as_statement (
         [__cond] (auto const & __statements)
         {
-            return as_functor (
+            return
             [__cond, __statements] (auto && ... __args)
             {
                 while (__cond (std::forward<decltype(__args)>(__args)...))
-                    __statements (std::forward<decltype(__args)>(__args)...);
-            });
-        });
-    };
+                    __statements (std::forward<decltype(__args)>(__args)...) ;
+            } ;
+        }) ;
+    } ;
 }
 
 #endif
