@@ -11,12 +11,12 @@ thodd
      * For example :
      * always(2)('a', 12, "foo") == 2 
      */ 
-    extern constexpr auto 
+    inline constexpr auto 
     always = 
-        [] (auto&& __arg)
+        [] (auto && __arg)
         {
             return 
-            as_functor(
+            as_functor (
                 [&] (auto && ... __args)
                 -> decltype(auto)
                 {
