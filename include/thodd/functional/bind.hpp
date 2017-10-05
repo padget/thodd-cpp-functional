@@ -13,9 +13,9 @@ thodd
      * constexpr auto add = [](auto&& __a, auto&& __b) { return a + b ; } ;
      * bind(add, val(4), $0)(1) == add(4, 1) == 5 
      */ 
-    extern constexpr auto
+    inline constexpr auto
     bind = 
-        [](auto&& __func, auto&&... __args) 
+        [] (auto && __func, auto &&... __args) 
         {
             return as_functor(
                 demux(static_cast<decltype(__func)&&>(__func))
