@@ -18,12 +18,12 @@ thodd
      *          return 1 + func(next...) ;  
      * }
      */
-    extern constexpr auto
+    inline constexpr auto
     fix = 
         [](auto&& __func)
         {
             return as_functor(
-            [__func](auto&&... __args)
+            [__func] (auto&&... __args)
             -> decltype(auto)
             {
                 return 

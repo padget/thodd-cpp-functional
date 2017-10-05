@@ -6,17 +6,18 @@
 namespace
 thodd
 {
-    extern constexpr auto
+    inline constexpr auto
     partial = 
-        [](auto&& __func, auto&&... __params)
+        [] (auto && __func, auto &&... __params)
         {
             return 
-            as_functor(
-                [__func, &__params...] (auto&&... __args)
+            as_functor (
+                [__func, &__params...] (auto &&... __args)
                 -> decltype(auto)
                 {
                     return 
-                    __func(static_cast<decltype(__params)&&>(__params)..., 
+                    __func (
+                        static_cast<decltype(__params)&&>(__params)..., 
                         static_cast<decltype(__args)&&>(__args)...) ;
                 }) ; 
         } ;

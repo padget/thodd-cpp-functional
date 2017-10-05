@@ -86,14 +86,14 @@ namespace thodd
     THODD_UNARY_OP_CONSTEXPR(*)
 
 
-    extern constexpr auto cout_  = ref(std::cout);
-    extern constexpr auto wcout_ = ref(std::wcout);
+    inline constexpr auto cout_  = ref(std::cout);
+    inline constexpr auto wcout_ = ref(std::wcout);
 
-    extern constexpr auto cin_   = ref(std::cin);
-    extern constexpr auto wcin_  = ref(std::wcin);
+    inline constexpr auto cin_   = ref(std::cin);
+    inline constexpr auto wcin_  = ref(std::wcin);
 
-	extern constexpr auto cerr_  = ref(std::cerr);
-    extern constexpr auto wcerr_ = ref(std::wcerr);
+	inline constexpr auto cerr_  = ref(std::cerr);
+    inline constexpr auto wcerr_ = ref(std::wcerr);
 
     namespace detail
     {
@@ -106,8 +106,8 @@ namespace thodd
 }
 
 #  define ARGON_COMPLEX_STREAMFLAG(name)                                                           \
-    extern constexpr auto name##_  = cref(std::name<detail::cout_char, detail::cout_traits>);      \
-    extern constexpr auto w##name##_ = cref(std::name<detail::wcout_char, detail::wcout_traits>);  \
+    inline constexpr auto name##_  = cref(std::name<detail::cout_char, detail::cout_traits>);      \
+    inline constexpr auto w##name##_ = cref(std::name<detail::wcout_char, detail::wcout_traits>);  \
 
 namespace
 thodd 
@@ -120,7 +120,7 @@ thodd
 
 
 #  define ARGON_SIMPLE_STREAMFLAG(name)                  \
-	extern constexpr auto name##_ = cref(std::name);     \
+	inline constexpr auto name##_ = cref(std::name);     \
 
 
 namespace

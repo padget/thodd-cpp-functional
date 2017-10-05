@@ -8,9 +8,9 @@ thodd
 {
     template<
         typename type_t>
-    extern constexpr auto 
+    inline constexpr auto 
     cast_ = as_functor(
-        [](auto&& __arg)
+        [] (auto&& __arg)
         -> decltype(auto)
         {
             return 
@@ -20,9 +20,9 @@ thodd
 
     template<
         typename type_t>
-    extern constexpr auto 
+    inline constexpr auto 
     static_cast_ = as_functor(
-        [](auto&& __arg)
+        [] (auto&& __arg)
         -> decltype(auto)
         {
             return 
@@ -32,9 +32,9 @@ thodd
 
     template<
         typename type_t>
-    extern constexpr auto 
+    inline constexpr auto 
     dynamic_cast_ = as_functor(
-        [](auto&& __arg)
+        [] (auto&& __arg)
         -> decltype(auto)
         {
             return 
@@ -44,9 +44,9 @@ thodd
 
     template<
         typename type_t>
-    extern constexpr auto 
+    inline constexpr auto 
     const_cast_ = as_functor(
-        [](auto&& __arg)
+        [] (auto&& __arg)
         -> decltype(auto)
         {
             return 
@@ -56,9 +56,9 @@ thodd
 
     template<
         typename type_t>
-    extern constexpr auto 
+    inline constexpr auto 
     reinterpret_cast_ = as_functor(
-        [](auto&& __arg)
+        [] (auto&& __arg)
         -> decltype(auto)
         {
             return 

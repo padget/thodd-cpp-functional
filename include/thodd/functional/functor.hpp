@@ -12,8 +12,8 @@ thodd
 
 
     constexpr auto
-    as_functor(
-        auto&& __base)
+    as_functor (
+        auto && __base)
     {
         return 
         functor<std::decay_t<decltype(__base)>>
@@ -75,7 +75,7 @@ thodd
             functor<obase_t> && __other) const
         {
             return 
-            as_functor(
+            as_functor (
                 assignement<obase_t>{*this, __other}) ;
         }
     };

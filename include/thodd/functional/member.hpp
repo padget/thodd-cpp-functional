@@ -13,12 +13,12 @@ thodd
      * auto f = member(&std::string::operator+=, str, $0) ;
      * f(std::string("hello")) <=> str.*operator += (std::string("hello"))   
      */
-    extern constexpr auto
+    inline constexpr auto
 	member = 
-        [](auto&& __func, auto&& __instance, auto&&... _prebinded)
+        [] (auto && __func, auto && __instance, auto &&... _prebinded)
         {
             return as_functor(
-            [=](auto&&... _args) 
+            [=] (auto &&... _args) 
             -> decltype(auto)
             {
                 using func_t = decltype(__func) ;
@@ -26,7 +26,7 @@ thodd
 
                 return 
                 (static_cast<instance_t&&>(__instance).*static_cast<func_t&&>(__func))
-                (_prebinded(static_cast<decltype(_args)&&>(_args)...)...) ;
+                (_prebinded (static_cast<decltype(_args)&&>(_args)...)...) ;
             }) ;
         } ;
 }

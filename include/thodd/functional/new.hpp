@@ -8,13 +8,13 @@ thodd
 {
     template<
         typename type_t>
-    extern constexpr auto
+    inline constexpr auto
     new_ =
-        as_functor(
+        as_functor (
             [] (auto&&... __args)
             {
                 return 
-                new type_t(
+                new type_t (
                     static_cast<decltype(__args)&&>(__args)...);
             });
 }

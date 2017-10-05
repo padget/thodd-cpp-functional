@@ -18,12 +18,12 @@ thodd
      * __ref(12, 5, 6, 7, 9)++ ; // Update the reference
      * __ref(12, 5, 6, 7, 9) == 7
      */
-    extern constexpr auto
+    inline constexpr auto
     ref = 
         [] (auto& __ref)
         {
             return 
-            as_functor(
+            as_functor (
                 [&__ref] (...)
                 -> decltype(auto)
                 {

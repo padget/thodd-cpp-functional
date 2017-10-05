@@ -7,26 +7,26 @@
 namespace
 thodd
 {
-    extern constexpr auto
+    inline constexpr auto
     tern = 
         [](auto&& __cond)
         {
             return 
-            as_statement(
-            [&__cond] (auto&& __statements)
+            as_statement (
+            [&__cond] (auto && __statements)
             {
                 return 
-                as_statement(
-                [&__cond, &__statements](auto&& __else_statements)
+                as_statement (
+                [&__cond, &__statements] (auto && __else_statements)
                 {
-                    return as_functor(
-                    [__cond, __statements, __else_statements](auto&&... __args)
+                    return as_functor (
+                    [__cond, __statements, __else_statements](auto && ... __args)
                     -> decltype(auto)
                     {
                         return 
-                            __cond(static_cast<decltype(__args)&&>(__args)...) ?
-                            __statements(static_cast<decltype(__args)&&>(__args)...) :
-                            __else_statements(static_cast<decltype(__args)&&>(__args)...);
+                        __cond (static_cast<decltype(__args)&&>(__args)...) ?
+                            __statements (static_cast<decltype(__args)&&>(__args)...) :
+                            __else_statements (static_cast<decltype(__args)&&>(__args)...);
                     });
                 });
             });

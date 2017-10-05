@@ -12,13 +12,13 @@ thodd
      * For example :
      * compose(__fsup, __finf)(1, 2, 3) == __fsup(__finf(1, 2, 3)) 
      */
-    extern constexpr auto
+    inline constexpr auto
     compose = 
-        [](auto&& __fsup, auto&& __finf) 
+        [] (auto && __fsup, auto && __finf) 
         {
             return 
-            as_functor(
-                demux(static_cast<decltype(__fsup)&&>(__fsup))
+            as_functor (
+                demux (static_cast<decltype(__fsup)&&>(__fsup))
                 (static_cast<decltype(__finf)&&>(__finf))) ;
         } ;
 }

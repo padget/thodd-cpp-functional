@@ -11,18 +11,18 @@ thodd
      * For example :
      * on(f, a, args...) <=> f(a(args)...)
      */
-    extern constexpr auto 
-    on = [] (auto&& __func, 
-             auto&& __applied)
+    inline constexpr auto 
+    on = 
+    [] (auto && __func, auto && __applied)
         {
             return 
-            as_functor(
-                [__func, __applied] (auto&&... __args)
+            as_functor (
+                [__func, __applied] (auto && ... __args)
                 -> decltype(auto)
                 {
                     return 
-                    __func(
-                        __applied(
+                    __func (
+                        __applied (
                             static_cast<decltype(__args)&&>(__args))...) ;
                 }) ;
         } ;

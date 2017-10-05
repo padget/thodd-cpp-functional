@@ -13,19 +13,19 @@ thodd
      * if_( [] (...) { return true ; } )
      * [ [] (...) { cout << "hello" ; } ] ;
      */
-    extern constexpr auto
+    inline constexpr auto
     if_ = 
-        [](auto&& __cond)
+        [] (auto&& __cond)
         {
             return 
-            as_statement(
-            [&__cond] (auto&& __statements)
+            as_statement (
+            [__cond] (auto&& __statements)
             {
                 return as_functor(
-                [__cond, __statements](auto&&... __args)
+                [__cond, __statements](auto && ... __args)
                 {
-                    if(__cond(static_cast<decltype(__args)&&>(__args)...))
-                        __statements(static_cast<decltype(__args)&&>(__args)...);
+                    if (__cond (static_cast<decltype(__args)&&>(__args)...))
+                        __statements (static_cast<decltype(__args)&&>(__args)...);
                 });
             });
         };

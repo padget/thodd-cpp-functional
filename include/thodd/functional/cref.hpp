@@ -16,13 +16,13 @@ thodd
      * ++a;
      * __cref(12, 5, 6, 7, 9) == 6 // the value has changed thanks to reference capturing 
      */
-    extern constexpr auto
+    inline constexpr auto
     cref = 
-        [] (auto const& __cref)
+        [] (auto const & __cref)
         {
             return 
-            as_functor(
-                [&__cref] (...)
+            as_functor (
+                [&__cref] (...) constexpr
                 -> decltype(auto)
                 {
                     return __cref ;

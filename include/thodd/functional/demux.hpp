@@ -12,16 +12,16 @@ thodd
      * For example:
      * demux(f)(g1, g2, g3)(1, 2, 3) == f(g1(1, 2, 3), g2(1, 2, 3), g3(1, 2, 3))
      */
-    extern constexpr auto 
+    inline constexpr auto 
     demux = 
-        [](auto&& __func)
+        [] (auto && __func)
         {
             return 
-            [&__func](auto&&... __funcs)
+            [&__func] (auto && ... __funcs)
             {
                 return 
-                as_functor( 
-                    [__func, __funcs...](auto&&... __args)
+                as_functor ( 
+                    [__func, __funcs...](auto && ... __args)
                     -> decltype(auto)
                     {
                         return __func(__funcs(static_cast<decltype(__args)&&>(__args)...)...) ;

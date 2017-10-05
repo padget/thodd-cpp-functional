@@ -14,12 +14,12 @@ thodd
      * auto __v = val(a) ;
      * __v() == 5
      */
-    extern constexpr auto
+    inline constexpr auto
     val = 
         [] (auto&& __val)
         {
             return 
-            as_functor(
+            as_functor (
                 [=] (...)
                 {
                     return __val ;

@@ -6,9 +6,9 @@
 namespace
 thodd
 {
-    extern constexpr auto
+    inline constexpr auto
     delete_ = 
-        as_functor(
+        as_functor (
             [] (auto* __ptr)
             {
                 delete __ptr;
