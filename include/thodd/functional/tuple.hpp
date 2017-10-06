@@ -14,6 +14,7 @@ thodd
     {
         return 
         [item...] (auto && accessor)
+        -> decltype(auto)
         {
             return 
             std::forward<decltype(accessor)>(accessor) (item...) ;
@@ -32,6 +33,7 @@ thodd
     inline constexpr auto
     nth = 
     [] (auto && t, auto index)
+    -> decltype(auto)
     {
         return
         std::forward<decltype(t)>(t) (
