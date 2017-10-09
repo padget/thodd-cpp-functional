@@ -59,6 +59,33 @@ thodd
     inline constexpr auto idx12 = index<12>{} ;
     inline constexpr auto idx13 = index<13>{} ;
     inline constexpr auto idx14 = index<14>{} ;
+
+    inline constexpr auto
+    iterate = 
+    [] (auto && t, auto && func)
+    { 
+        return 
+        t ([&func] (auto && ... item) 
+        { (func (std::forward<decltype(item)>(item)), ...) ; }) ; 
+    } ;
+
+    inline constexpr auto
+    transform =
+    [] (auto && t, auto && func)
+    { 
+        return 
+        t ([&func] (auto && ... item) 
+        { return tuple (func(std::forward<decltype(item)>(item))...) ; } ) ; 
+    } ;
+
+    inline constexpr auto
+    accumulate = 
+    [] (auto && t, auto init, auto && accumulator)
+    -> decltype(auto)
+    {
+        return 
+        t ([&init, &accumulator] (auto && ... item) { (accumulator (init, item), ...) ; return init ; } ) ;
+    } ;
 }
 
 #endif

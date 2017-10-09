@@ -9,16 +9,15 @@
 #  define THODD_BINARY_OP_CONSTEXPR(symbol, name)               \
 inline constexpr auto                                           \
 name =                                                          \
-[] (auto && left, auto && ... right)                            \
+[] (auto && left, auto && right)                                \
 {                                                               \
     return                                                      \
-    [left, right...] (auto && ... args)                         \
+    [left, right] (auto && ... args)                            \
+    -> decltype(auto)                                           \
     {                                                           \
         return                                                  \
         left (std::forward<decltype(args)>(args)...)            \
-        symbol (                                                \
-            right (std::forward<decltype(args)>(args)...)       \
-            symbol ... ) ;                                      \
+        symbol right (std::forward<decltype(args)>(args)...) ;  \
     } ;                                                         \
 } ;                                                             \
 
@@ -27,13 +26,13 @@ name =                                                          \
 #  define THODD_UNARY_OP_CONSTEXPR(symbol, name)                \
 inline constexpr auto                                           \
 name =                                                          \
-[] (auto && left)                            \
+[] (auto && left)                                               \
 {                                                               \
     return                                                      \
-    [left] (auto && ... args)                         \
+    [left] (auto && ... args)                                   \
     {                                                           \
         return                                                  \
-        symbol left (std::forward<decltype(args)>(args)...) ;            \
+        symbol left (std::forward<decltype(args)>(args)...) ;   \
     } ;                                                         \
 } ;                                                             \
 
@@ -70,6 +69,7 @@ namespace thodd
     THODD_UNARY_OP_CONSTEXPR(~, compl_)
 
     /// Affectations
+    THODD_BINARY_OP_CONSTEXPR(=, ass)
     THODD_BINARY_OP_CONSTEXPR(+=, sum_ass)
     THODD_BINARY_OP_CONSTEXPR(-=, sub_ass)
     THODD_BINARY_OP_CONSTEXPR(*=, mult_ass)
