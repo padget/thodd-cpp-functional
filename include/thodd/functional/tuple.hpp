@@ -84,7 +84,7 @@ thodd
     -> decltype(auto)
     {
         return 
-        t ([&init, &accumulator] (auto && ... item) { (accumulator (init, item), ...) ; return init ; } ) ;
+        t ([&init, &accumulator] (auto && ... item) { (init = accumulator (init, item), ...) ; return init ; } ) ;
     } ;
 }
 
