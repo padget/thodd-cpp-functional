@@ -24,6 +24,7 @@
 #  include <thodd/functional/rpartial.hpp>
 #  include <thodd/functional/statement.hpp>
 #  include <thodd/functional/statements.hpp>
+#  include <thodd/functional/switch.hpp>
 #  include <thodd/functional/tern.hpp>
 #  include <thodd/functional/tuple.hpp>
 #  include <thodd/functional/until.hpp>
