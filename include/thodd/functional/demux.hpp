@@ -17,7 +17,7 @@ thodd
     [] (auto && __func)
     {
         return 
-        [&__func] (auto && ... __funcs)
+        [__func] (auto && ... __funcs)
         {
             return
             [__func, __funcs...] (auto && ... __args)

@@ -13,6 +13,7 @@
 #  include <thodd/functional/delete.hpp>
 #  include <thodd/functional/demux.hpp>
 #  include <thodd/functional/fix.hpp>
+#  include <thodd/functional/id.hpp>
 #  include <thodd/functional/member.hpp>
 #  include <thodd/functional/new.hpp>
 #  include <thodd/functional/nothing.hpp>

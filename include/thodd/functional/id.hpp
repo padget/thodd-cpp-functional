@@ -1,23 +1,19 @@
 #ifndef __THODD_FUNCTIONAL_ID_HPP__
 #  define __THODD_FUNCTIONAL_ID_HPP__
 
+#  include <thodd/functional/placeholder.hpp>
+
 namespace 
 thodd
 {
-    struct id
+    inline constexpr auto
+    id = 
+    [] (auto && ... args)
     {
-        constexpr auto 
-        operator () ( 
-            auto&&... __args) const
-        -> decltype(auto) 
-        {
-            auto&& __first = $0(static_cast<decltype(__args)&&>(__args)...);
-            return __first;
-        }
-
-        constexpr auto
-        operator() () const {}
-    };
+        if constexpr (sizeof...(args) > 0)
+            return 
+            $0 (static_cast<decltype(args)&&>(args)...) ;
+    } ;
 }
 
 #endif
