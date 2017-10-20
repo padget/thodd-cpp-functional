@@ -8,11 +8,11 @@ thodd
 {
     inline constexpr auto
     id = 
-    [] (auto && ... args)
+    [] (auto && ... args) -> decltype(auto)
     {
         if constexpr (sizeof...(args) > 0)
             return 
-            $0 (static_cast<decltype(args)&&>(args)...) ;
+            ($0 (static_cast<decltype(args)&&>(args)...)) ;
     } ;
 }
 

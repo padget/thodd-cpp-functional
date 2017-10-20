@@ -20,9 +20,9 @@ thodd
             constexpr auto subrank = placeholder<index_c - 1>() ; 
             
             if constexpr (index_c == 0)
-                return first ;
+                return (first) ;
             else 
-                return subrank (std::forward<decltype(next)>(next)...) ;
+                return (subrank (std::forward<decltype(next)>(next)...)) ;
         } ;
     } ;
 

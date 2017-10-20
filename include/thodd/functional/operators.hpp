@@ -6,35 +6,28 @@
 #  include <thodd/functional/cref.hpp>
 #  include <iostream>
 
-#  define THODD_BINARY_OP_CONSTEXPR(symbol, name)               \
-inline constexpr auto                                           \
-name =                                                          \
-[] (auto && left, auto && right)                                \
-{                                                               \
-    return                                                      \
-    [left, right] (auto && ... args)                            \
-    -> decltype(auto)                                           \
-    {                                                           \
-        return                                                  \
-        left (std::forward<decltype(args)>(args)...)            \
-        symbol right (std::forward<decltype(args)>(args)...) ;  \
-    } ;                                                         \
-} ;                                                             \
+#  define THODD_BINARY_OP_CONSTEXPR(symbol, name)                            \
+inline constexpr auto                                                        \
+name =                                                                       \
+[] (auto && ... next)                                                        \
+{                                                                            \
+    return                                                                   \
+    [next...] (auto && ... args)                                             \
+    -> decltype(auto)                                                        \
+    { return (... symbol next (std::forward<decltype(args)>(args)...)) ; } ; \
+} ;                                                                          \
 
 
 
-#  define THODD_UNARY_OP_CONSTEXPR(symbol, name)                \
-inline constexpr auto                                           \
-name =                                                          \
-[] (auto && left)                                               \
-{                                                               \
-    return                                                      \
-    [left] (auto && ... args)                                   \
-    {                                                           \
-        return                                                  \
-        symbol left (std::forward<decltype(args)>(args)...) ;   \
-    } ;                                                         \
-} ;                                                             \
+#  define THODD_UNARY_OP_CONSTEXPR(symbol, name)                       \
+inline constexpr auto                                                  \
+name =                                                                 \
+[] (auto && left)                                                      \
+{                                                                      \
+    return                                                             \
+    [left] (auto && ... args)                                          \
+    { return symbol left (std::forward<decltype(args)>(args)...) ; } ; \
+} ;                                                                    \
 
 
 
