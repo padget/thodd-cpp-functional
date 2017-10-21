@@ -69,14 +69,14 @@ thodd
         { (func (std::forward<decltype(item)>(item)), ...) ; }) ; 
     } ;
 
-    inline constexpr auto
+    /*inline constexpr auto
     transform =
     [] (auto && t, auto && func)
     { 
         return 
         t ([&func] (auto && ... item) 
         { return tuple (func(std::forward<decltype(item)>(item))...) ; } ) ; 
-    } ;
+    } ;*/
 
     inline constexpr auto
     accumulate = 
