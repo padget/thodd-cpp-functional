@@ -3,7 +3,7 @@
 
 #  include <utility>
 
-#  include <thodd/functional/functor.hpp>
+
 
 namespace
 thodd
