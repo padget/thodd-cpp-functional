@@ -9,7 +9,7 @@ thodd
 {
     inline constexpr auto
     tern = 
-        [](auto&& __cond)
+        [](auto && __cond)
         {
             return 
             as_statement (
