@@ -22,7 +22,7 @@ thodd
     } ;
 
     inline constexpr auto
-    size = 
+    length = 
     [] (auto && t)
     {
         return 
